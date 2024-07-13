@@ -1,48 +1,28 @@
 import { StatusBar } from 'expo-status-bar';
 import React from "react";
-import { StyleSheet,Text,View,Button,Alert} from 'react-native';
-import AppFooter from './components/AppFooter';
+import { StyleSheet, Text, View, Button, Alert } from 'react-native';
 import AppHeader from './components/AppHeader';
+import AppFooter from './components/AppFooter';
+import Content from './components/Content';
 
-export default function App()  {
-
-  const onClickMe = ()=>{
-    Alert.alert("Hi","hello React.jf");
+export default function App(): React.JSX.Element {
+  const name = "Nutthinun Panawong";
+  const onClickMe = () => {
+    Alert.alert("Hello ",name);
   }
-
-  const users = [
-    {id:1001,name:'John'},
-    {id:1002,name:'Marry'}
-  ]
-
 
   return (
     <View style={styles.container}>
-      <AppHeader title="This is Header " year={2018}/>
-      <AppHeader title="This is Header2 "/>
-      <Text>Hello React Native!</Text>
-
-      {
-        users.map((data,index)=>{
-          return(
-            <Text key={data.id}>
-              No. {index+1} ID: {data.id} Name: {data.name}
-            </Text>        
-          )
-          }
-        )
-      }
+      <AppHeader name={"Nutthinun Panawong"} />  
+      <Text style={styles.text}>{name} {'\n'}</Text>
 
       <Button 
         title="Click Me"
         onPress={onClickMe}
         color='blue'
-        /* onPress = { () => {
-          Alert.alert("Hi","React Native is Fun!!");
-      }} */
-     />
-      <StatusBar style='auto'/>
-      <AppFooter/>
+      />
+      <StatusBar style='auto' />
+      <AppFooter />
     </View>
   );
 }
@@ -54,4 +34,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  text: {
+    fontSize: 20,
+  }
 });
