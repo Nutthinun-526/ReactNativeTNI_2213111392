@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, StyleSheet, TextInput } from "react-native";
+import { View, StyleSheet, TextInput, Alert } from "react-native";
 import AppHeader from "./components/AppHeader";
 import Content from "./components/Content";
 import AppFooter from "./components/AppFooter";
@@ -16,10 +16,18 @@ function App(): React.JSX.Element {
     console.log("Component has mounted");
   }, []);
 
+ 
+    const handleButtonClick = () =>{
+    Alert.alert("Hello",`Input your fullname : ${fullname}`);
+    }
+
+
+  
+
   return (
     <View style={styles.container}>
       <AppHeader fullname={fullname} message={message} />
-      <Content message={message} fullname={fullname} />
+      <Content message={message} onButtonClick = {handleButtonClick} />
       <AppFooter footerMessage={footMessage} />
       <TextInput
         style={stylesPractice.input}
@@ -36,6 +44,7 @@ const styles = StyleSheet.create({
     flex: 1,
     //justifyContent: "space-between",
   },
-});
+}
+);
 
 export default App;
