@@ -1,6 +1,6 @@
 import {StyleSheet,Text,View,Image, Button } from 'react-native'
 import React, { useState } from 'react'
-import styles from '../styles/styles'
+import {styles} from "../styles/styles";
 
 const ProfileScreen = () : React.JSX.Element => {
     const Profile = require("../assets/Profile.png");
@@ -17,19 +17,18 @@ const ProfileScreen = () : React.JSX.Element => {
       setImage (image==Profile ? NewProfile : Profile);
     }
 
-  return (
-    <View style={styles.container}>
+    return (
+      <View style={styles.container}>
         <View style={styles.profileContainer}>
-            <Image source={image} style={styles.profileImage}/>
-            <View>
+          <Image source={image} style={styles.profileImage} />
+          <View>
             <Text style={styles.profileName}>{name}</Text>
-            <Button title="Change name" onPress={handleChangeName}/>
-            <Text>{'\n'}</Text>
+            <Button title="Change Name" onPress={handleChangeName} />
+            <Text>{"\n"}</Text>
             <Button title="Change Image" onPress={handleChangeImage}/>
-            </View>
+          </View>
         </View>
-    </View>
-  );
-};
-
-export default ProfileScreen
+      </View>
+    );
+  };
+  export default ProfileScreen;

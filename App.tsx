@@ -1,15 +1,41 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
-import ProfileScreen from './components/ProfileScreen'
+import React, { useEffect, useState } from "react";
+import { View, StyleSheet, TextInput } from "react-native";
+import AppHeader from "./components/AppHeader";
+import Content from "./components/Content";
+import AppFooter from "./components/AppFooter";
+import { stylesPractice } from "./styles/styles";
 
-const App = () => {
+function App(): React.JSX.Element {
+  const [fullname, setFullname] = useState("");
+  const [message, setMessage] = useState("Message from App.tsx");
+  const [footMessage, setFootMessage] = useState(
+    "Thai-Nichi Institute of Technology"
+  );
+
+  useEffect(() => {
+    console.log("Component has mounted");
+  }, []);
+
   return (
-    <View>
-      <ProfileScreen/>
+    <View style={styles.container}>
+      <AppHeader fullname={fullname} message={message} />
+      <Content message={message} fullname={fullname} />
+      <AppFooter footerMessage={footMessage} />
+      <TextInput
+        style={stylesPractice.input}
+        placeholder="Enter your fullname"
+        value={fullname}
+        onChangeText={setFullname}
+      />
     </View>
-  )
+  );
 }
 
-export default App
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    //justifyContent: "space-between",
+  },
+});
 
-const styles = StyleSheet.create({})
+export default App;

@@ -1,40 +1,28 @@
-import { StatusBar } from 'expo-status-bar';
 import React from "react";
-import { StyleSheet, Text, View, Button, Alert } from 'react-native';
-import AppHeader from './components/AppHeader';
-import AppFooter from './components/AppFooter';
-import Content from './components/Content';
+import { View, StyleSheet } from "react-native";
+import AppHeader from "./components/AppHeader";
+import Content from "./components/Content";
+import AppFooter from "./components/AppFooter";
 
-export default function App(): React.JSX.Element {
-  const name = "Nutthinun Panawong";
-  const onClickMe = () => {
-    Alert.alert("Hello ",name);
-  }
+const App: React.FC = () => {
+
+  const subtitle = "Message from App.tsx";
+  const title = "Input your fullname";
 
   return (
     <View style={styles.container}>
-      <AppHeader name={"Nutthinun Panawong"} />  
-      <Text style={styles.text}>{name} {'\n'}</Text>
-
-      <Button 
-        title="Click Me"
-        onPress={onClickMe}
-        color='blue'
-      />
-      <StatusBar style='auto' />
-      <AppFooter />
+      <AppHeader title={title} subtitle={subtitle} />
+      <Content message={subtitle} title={title} />
+      <AppFooter footerText="Thai-Nichi Institute of Technology" />
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: "space-between",
   },
-  text: {
-    fontSize: 20,
-  }
 });
+
+export default App;
