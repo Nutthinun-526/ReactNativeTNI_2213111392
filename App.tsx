@@ -1,20 +1,19 @@
 import { View, Text } from 'react-native'
 import React from 'react'
-import ProfileScreen from './components/ProfileScreen'
-import FlatListExample from './components/FlastListExample'
 import FlatListcallBackend from './components/FlatListcallBackend'
-// import UseEffectExample from './components/useEffectExample'
+import NewsApp from './components/NewsApp'
+import { StatusBar } from 'expo-status-bar'
+
 
 
 const App = ():React.JSX.Element => {
   return (
     <View>
-      {/* <ProfileScreen/> */}
-      {/* <UseEffectExample/> */}
-      <FlatListExample/>
-      <FlatListcallBackend/>
+      {/* <FlatListcallBackend/> */}
+      <NewsApp/>
+      <StatusBar style="auto" />
     </View>
-  )
-}
+  );
+};
 
 export default App
