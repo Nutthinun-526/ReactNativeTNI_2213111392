@@ -3,6 +3,10 @@ import React from 'react'
 import FlatListcallBackend from './components/FlatListcallBackend'
 import NewsApp from './components/NewsApp'
 import { StatusBar } from 'expo-status-bar'
+import AxiosgetData from './components/AxiosgetData'
+import AxiosPostData from './components/AxiosgetData'
+import WeatherLondon from './components/WeatherLondon'
+import WeatherBangkok from './components/WeatherBangkok'
 
 
 
@@ -10,8 +14,12 @@ const App = ():React.JSX.Element => {
   return (
     <View>
       {/* <FlatListcallBackend/> */}
-      <NewsApp/>
-      <StatusBar style="auto" />
+      {/* <NewsApp/>
+      <StatusBar style="auto" /> */}
+      {/* <WeatherLondon/> */}
+      {/* <AxiosgetData/>
+      <AxiosPostData/> */}
+      <WeatherBangkok/>
     </View>
   );
 };
