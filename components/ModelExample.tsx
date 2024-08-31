@@ -6,61 +6,90 @@ import WeatherLondon from "./WeatherLondon";
 
 const ModelExample = (): React.JSX.Element => {
   const [modalVisible, setModalVisible] = useState(false);
+  const [LondonWeatherVisible, setLondonWeatherVisible] = useState(false);
+  const [BangkokWeatherVisible, setBangkokWeatherVisible] = useState(false);
 
   return (
     <View style={styles.centeredView}>
+      {/* Weather App Header */}
       <Text style={styles.text}>Weather App</Text>
       <Text style={styles.modalText}></Text>
+
+      {/* London Button */}
       <Pressable
         style={[styles.button, styles.buttonOpen]}
-        onPress={() => setModalVisible(true)}
+        onPress={() => {
+          setModalVisible(true);
+          setLondonWeatherVisible(true);
+        }}
       >
         <Text style={styles.textStyle}>London</Text>
       </Pressable>
+
       <Text style={styles.modalText}></Text>
+
+      {/* Bangkok Button */}
       <Pressable
         style={[styles.button, styles.buttonOpen]}
-        onPress={() => setModalVisible(true)}
+        onPress={() => {
+          setModalVisible(true);
+          setBangkokWeatherVisible(true);
+        }}
       >
         <Text style={styles.textStyle}>Bangkok</Text>
       </Pressable>
+
+      {/* London Weather Modal */}
       <Modal
         animationType="slide"
         transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => setModalVisible(!modalVisible)}
+        visible={modalVisible && LondonWeatherVisible}
+        onRequestClose={() => {
+          setLondonWeatherVisible(false);
+          if (!BangkokWeatherVisible) setModalVisible(false);
+        }}
       >
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-            <Text style={styles.modalText}>Bangkok</Text>
+            <Text style={styles.modalText}>London Weather</Text>
             <Pressable
-              style={[styles.buttonClose]}
-              onPress={() => setModalVisible(false)}
+              style={styles.buttonClose}
+              onPress={() => {
+                setLondonWeatherVisible(false);
+                if (!BangkokWeatherVisible) setModalVisible(false);
+              }}
+            >
+              <WeatherLondon />
+            </Pressable>
+          </View>
+        </View>
+      </Modal>
+
+      {/* Bangkok Weather Modal */}
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible && BangkokWeatherVisible}
+        onRequestClose={() => {
+          setBangkokWeatherVisible(false);
+          if (!LondonWeatherVisible) setModalVisible(false);
+        }}
+      >
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <Text style={styles.modalText}>Bangkok Weather</Text>
+            <Pressable
+              style={styles.buttonClose}
+              onPress={() => {
+                setBangkokWeatherVisible(false);
+                if (!LondonWeatherVisible) setModalVisible(false);
+              }}
             >
               <WeatherBangkok />
             </Pressable>
           </View>
         </View>
       </Modal>
-      //London
-      {/* <Modal
-                animationType="slide"
-                transparent={true}
-                visible={modalVisible}
-                onRequestClose={() => setModalVisible(!modalVisible)}
-            >
-                <View style={styles.centeredView}>
-                    <View style={styles.modalView}>
-                        <Text style={styles.modalText}>London</Text>
-                        <Pressable
-                            style={[styles.buttonClose]}
-                            onPress={() => setModalVisible(false)}
-                        >
-                            <WeatherBangkok/>
-                        </Pressable>
-                    </View>
-                </View>
-            </Modal> */}
     </View>
   );
 };
@@ -77,7 +106,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     marginTop: 100,
-    fontSize: 20,
+    fontSize: 45,
   },
   modalView: {
     margin: 50,
@@ -100,7 +129,7 @@ const styles = StyleSheet.create({
     elevation: 2,
   },
   buttonOpen: {
-    backgroundColor: "#F194FF",
+    backgroundColor: "#FDC830",
   },
   buttonClose: {
     backgroundColor: "#2196F3",
@@ -109,9 +138,11 @@ const styles = StyleSheet.create({
     color: "white",
     fontWeight: "bold",
     textAlign: "center",
+    fontSize:30,
   },
   modalText: {
     marginBottom: 15,
     textAlign: "center",
+    fontSize:30,
   },
 });

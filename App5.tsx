@@ -15,13 +15,6 @@ import AboutScreen from './screens/AboutScreen'
 const App = ():React.JSX.Element => {
   return (
     <View>
-      {/* <FlatListcallBackend/> */}
-      {/* <NewsApp/>
-      <StatusBar style="auto" /> */}
-      {/* <WeatherLondon/> */}
-      {/* <AxiosgetData/>
-      <AxiosPostData/> */}
-      {/* <WeatherBangkok/> */}
       <ModelExample/>
     </View>
   );

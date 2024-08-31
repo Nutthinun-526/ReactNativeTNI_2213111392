@@ -122,7 +122,7 @@ const styles = StyleSheet.create({
     color: "#333",
   },
   temp: {
-    fontSize: 64,
+    fontSize: 50,
     fontWeight: "bold",
     marginBottom: 8,
     color: "#ff6347",
