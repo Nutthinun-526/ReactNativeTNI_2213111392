@@ -133,13 +133,13 @@ const styles = StyleSheet.create({
     color: "red",
   },
   cityName: {
-    fontSize: 36,
+    fontSize: 25,
     fontWeight: "bold",
     marginBottom: 8,
     color: "#333",
   },
   temp: {
-    fontSize: 64,
+    fontSize: 50,
     fontWeight: "bold",
     marginBottom: 8,
     color: "#ff6347",
