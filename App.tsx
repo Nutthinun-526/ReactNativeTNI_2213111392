@@ -1,25 +1,21 @@
 import "react-native-gesture-handler";
-
 import React from "react";
 import { HeaderButtonsProvider } from "react-navigation-header-buttons";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-
 import HomeScreen from "./screens/HomeScreen";
 import AboutScreen from "./screens/AboutScreen";
 import CreatePostScreens from "./screens/CreatePostScreens";
-import MenuScreens from "./screens/MenuScreens";
+import MenuScreen from "./screens/MenuScreens";
 import ProductScreen from "./screens/ProductScreen";
+import DetailScreen from "./Services/DetailScreen";
 
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-
 import { createDrawerNavigator } from "@react-navigation/drawer";
 
 const HomeStack = createNativeStackNavigator();
 const ProductStack = createNativeStackNavigator();
-
 const Drawer = createDrawerNavigator();
-
 function HomeStackScreen() {
   return (
     <HomeStack.Navigator
@@ -29,7 +25,6 @@ function HomeStackScreen() {
         headerTitleStyle: { fontWeight: "bold" },
       }}
     >
-      <HomeStack.Screen name="Home" component={HomeScreen} />
       <HomeStack.Screen
         name="About"
         component={AboutScreen}
@@ -47,13 +42,14 @@ function HomeStackScreen() {
 function ProductStackScreen() {
   return (
     <ProductStack.Navigator
-      initialRouteName="Home"
+      initialRouteName="Products"
       screenOptions={{
         //Global
         headerTitleStyle: { fontWeight: "bold" },
       }}
     >
       <ProductStack.Screen name="Products" component={ProductScreen} />
+      <ProductStack.Screen name="Detail" component={DetailScreen} />
     </ProductStack.Navigator>
   );
 }
@@ -65,7 +61,7 @@ const App = (): React.JSX.Element => {
         <NavigationContainer>
           <Drawer.Navigator
             screenOptions={{ headerShown: false }}
-            drawerContent={(props) => <MenuScreens {...props} />}
+            drawerContent={(props) => <MenuScreen {...props} />}
           >
             <Drawer.Screen name="HomeStack" component={HomeStackScreen} />
             <Drawer.Screen name="ProductStack" component={ProductStackScreen} />
@@ -75,5 +71,4 @@ const App = (): React.JSX.Element => {
     </SafeAreaProvider>
   );
 };
-
 export default App;
