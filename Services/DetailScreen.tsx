@@ -7,40 +7,27 @@ import {
   StyleSheet,
   Dimensions,
 } from "react-native";
-import React, { useState } from "react";
 import {
+  useFocusEffect,
   useNavigation,
   useRoute,
-  useFocusEffect,
 } from "@react-navigation/native";
 import { findProductbyId } from "./product-service";
-// import { ListItem, Avatar } from "@rneui/themed";
 import { ListItem, Tile } from "@rneui/themed";
+import React, { useState } from "react";
 
 const DetailScreen = (): React.JSX.Element => {
   const route = useRoute<any>();
   const navigation = useNavigation<any>();
-  const [detail, setDetail] = React.useState<any>([]);
+  const [detail, setDetail] = useState<any>([]);
   const [loading, setLoading] = useState<boolean>(false);
-
-  /* const getProduct = async () => {
-    try {
-      setLoading(true);
-      const response = await findProductbyId(route.params.id);
-      // console.log(response.data.data);
-      setDetail(response.data.data);
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setLoading(false);
-    }
-  }; */
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
       headerTitle: route.params.title,
     });
-  }, [navigation, route]);
+
+  }, [route, navigation]);
 
   const getProductbyId = async () => {
     try {
@@ -61,32 +48,11 @@ const DetailScreen = (): React.JSX.Element => {
     }, [])
   );
 
-  /* const _renderItem: ListRenderItem<any> = ({ item }) => {
-    return (
-      <>
-        <ListItem.Content>
-          <ListItem.Title>{item.ch_title}</ListItem.Title>
-        </ListItem.Content>
-      </>
-    );
-  }; */
-
-  /* return (
-    <View>
-      <FlatList
-        data={detail}
-        keyExtractor={(item: any) => item.ch_id.toString()}
-        renderItem={_renderItem}
-      />
-    </View>
-  );
-}; */
-
-const _renderItem: ListRenderItem<any> = ({ item }) => (
+  const _renderItem: ListRenderItem<any> = ({ item }) => (
     <>
       <Tile
         imageSrc={{
-          uri: "https://www.mediastorehouse.com/p/191/sunset-porthmeor-beach-st-ives-cornwall-11702500.jpg.webp",
+          uri: "https://img.freepik.com/free-vector/beige-leafy-watercolor-background-vector_53876-136491.jpg",
         }}
         title={item.ch_title}
         titleStyle={styles.titleStyle}

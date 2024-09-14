@@ -26,12 +26,12 @@ const MaterialHeaderButton = (props: any) => (
 
 const ProductScreen = (): React.JSX.Element => {
   const navigation = useNavigation<any>();
-  const [product, setProduct] = useState<any[]>([]);
+
+  const [product, setProduct] = useState<any[]>([]); //[] array
   const [loading, setLoading] = useState<boolean>(false);
 
   useLayoutEffect(() => {
     navigation.setOptions({
-      // title: "Product",
       headerTitle: () => <Text>Product</Text>,
       headerTitleAlign: "center",
       headerLeft: () => (
@@ -71,33 +71,19 @@ const ProductScreen = (): React.JSX.Element => {
     return <ActivityIndicator size="large" color="blue" />;
   }
 
-  const renderItem: ListRenderItem<any> = ({ item }) => {
-    return (
-      <View>
-        <Text>{item.title}</Text>
-        <Text>{item.detail}</Text>
-      </View>
-    );
-  };
-
   const _renderItem: ListRenderItem<any> = ({ item }) => {
     return (
       <>
-        <ListItem bottomDivider>
-          <View>
-            <ListItem
-              bottomDivider
-              onPress={() => {
-                navigation.navigate("Detail", {
-                  id: item.id,
-                  title: item.title,
-                });
-              }}
-            >
-              <Avatar source={{ uri: item.picture }} size={50} rounded />
-            </ListItem>
-          </View>
-
+        <ListItem
+          bottomDivider
+          onPress={() => {
+            navigation.navigate("Details", {
+              id: item.id,
+              title: item.title,
+            });
+          }}
+        >
+          <Avatar source={{ uri: item.picture }} size={50} rounded />
           <ListItem.Content>
             <ListItem.Title>{item.title}</ListItem.Title>
             <ListItem.Subtitle>{item.detail}</ListItem.Subtitle>
@@ -111,18 +97,16 @@ const ProductScreen = (): React.JSX.Element => {
 
   return (
     <View>
-      {/* <Text>{JSON.stringify(product)}</Text> */}
       <FlatList
         data={product}
-        renderItem={_renderItem} //renderItem={renderItem}
+        renderItem={_renderItem}
         keyExtractor={(item: any) => item.id.toString()}
-        onRefresh={async () => {
-          await getProduct();
+        onRefresh={() => {
+          getProduct();
         }}
         refreshing={loading}
       />
     </View>
   );
 };
-
 export default ProductScreen;

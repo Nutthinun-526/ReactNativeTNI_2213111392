@@ -1,3 +1,4 @@
+// Only import react-native-gesture-handler on native platforms
 import "react-native-gesture-handler";
 import React from "react";
 import { HeaderButtonsProvider } from "react-navigation-header-buttons";
@@ -25,6 +26,7 @@ function HomeStackScreen() {
         headerTitleStyle: { fontWeight: "bold" },
       }}
     >
+      <HomeStack.Screen name="Home" component={HomeScreen} />
       <HomeStack.Screen
         name="About"
         component={AboutScreen}
@@ -38,7 +40,6 @@ function HomeStackScreen() {
     </HomeStack.Navigator>
   );
 }
-
 function ProductStackScreen() {
   return (
     <ProductStack.Navigator
@@ -49,11 +50,10 @@ function ProductStackScreen() {
       }}
     >
       <ProductStack.Screen name="Products" component={ProductScreen} />
-      <ProductStack.Screen name="Detail" component={DetailScreen} />
+      <ProductStack.Screen name="Details" component={DetailScreen} />
     </ProductStack.Navigator>
   );
 }
-
 const App = (): React.JSX.Element => {
   return (
     <SafeAreaProvider>
