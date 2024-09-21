@@ -1,6 +1,6 @@
 // Only import react-native-gesture-handler on native platforms
 import "react-native-gesture-handler";
-import React from "react";
+import React, { useState } from "react";
 import { HeaderButtonsProvider } from "react-navigation-header-buttons";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import HomeScreen from "./screens/HomeScreen";
@@ -13,16 +13,19 @@ import DetailScreen from "./Services/DetailScreen";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createDrawerNavigator } from "@react-navigation/drawer";
+import LoginScreen from "./screens/LoginScreen";
+import Toast from "react-native-toast-message";
 
 const HomeStack = createNativeStackNavigator();
 const ProductStack = createNativeStackNavigator();
+const LoginStack = createDrawerNavigator();
 const Drawer = createDrawerNavigator();
+
 function HomeStackScreen() {
   return (
     <HomeStack.Navigator
       initialRouteName="Home"
       screenOptions={{
-        //Global
         headerTitleStyle: { fontWeight: "bold" },
       }}
     >
@@ -40,12 +43,12 @@ function HomeStackScreen() {
     </HomeStack.Navigator>
   );
 }
+
 function ProductStackScreen() {
   return (
     <ProductStack.Navigator
       initialRouteName="Products"
       screenOptions={{
-        //Global
         headerTitleStyle: { fontWeight: "bold" },
       }}
     >
@@ -54,8 +57,25 @@ function ProductStackScreen() {
     </ProductStack.Navigator>
   );
 }
-const App = (): React.JSX.Element => {
+
+function LoginStackScreen() {
   return (
+    <LoginStack.Navigator
+      initialRouteName="Products"
+      screenOptions={{
+        headerTitleStyle: { fontWeight: "bold" },
+      }}
+    >
+      <LoginStack.Screen name="Login" component={LoginScreen} />
+    </LoginStack.Navigator>
+  );
+}
+
+const App = (): React.JSX.Element => {
+  const [isLogin] = useState(false);
+
+  return (
+    <>
     <SafeAreaProvider>
       <HeaderButtonsProvider stackType="native">
         <NavigationContainer>
@@ -69,6 +89,8 @@ const App = (): React.JSX.Element => {
         </NavigationContainer>
       </HeaderButtonsProvider>
     </SafeAreaProvider>
+    <Toast/>
+    </>
   );
 };
 export default App;
