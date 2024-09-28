@@ -10,7 +10,6 @@ export async function findAllProduct():Promise<AxiosResponse<any>> {
         throw error;
     }
 }
-
 export async function findProductbyId(id:number):Promise<AxiosResponse<any>> {
     try {
         const response = await http.get<any>(

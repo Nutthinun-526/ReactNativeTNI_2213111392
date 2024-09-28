@@ -1,24 +1,30 @@
 import { View } from "react-native";
-import React from "react";
-import { Text, Card, Input, Button } from "@rneui/base";
+import React, { useState } from "react";
+import { Text, Card, Input, Button,Icon} from "@rneui/base";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useForm, Controller } from "react-hook-form";
 import { login } from "../Services/auth-service";
 import { AxiosError } from "../Services/http-service";
 import Toast from "react-native-toast-message";
+import { setIsLogin } from "../auth/auth-slice";
+import { useAppDispatch } from "../redux-toolkit/hooks";
+
 
 const LoginScreen = (): React.JSX.Element => {
-  //1.define validation with Yub schema
+  const [showPassword,setShowPassword] = useState(false);
+  const dispatch = useAppDispatch();
+
+
   const schema = yup.object().shape({
     email: yup
       .string()
-      .required("Please input email.")
-      .email("Eamil format is invalid."),
+      .required("Please input email")
+      .email("Email format is invalid"),
     password: yup
       .string()
-      .required("Please input password.")
-      .min(3, "Please password must be at least 3 characters."),
+      .required("Please input password")
+      .min(3, "Password must be at least 3 characters."),
   });
   //2. Apply with React Hook form
   const {
@@ -33,24 +39,26 @@ const LoginScreen = (): React.JSX.Element => {
     try {
       const response = await login(data.email, data.password);
       if (response.status === 200) {
-        Toast.show({ type: "success", text1: "Login Success" });
-        // console.log('login success');
+        dispatch(setIsLogin(true));
+        // console.log("login success");
       }
     } catch (error: any) {
-      let err: AxiosError<any> = error;
+      let err: AxiosError<any> = error; //แปลงความผิดพลาดให้เป็น AxiosError
       if (err.response?.status === 401) {
-        // console.log(err.response.data.message);
         Toast.show({ type: "error", text1: err.response.data.message });
+        //console.log(err.response.data.message);
       } else {
-        // console.log('เกิดข้อผิดพลาด ไม่สามารถติดต่อ Server ได้');
-        Toast.show({ type: "error", text1: "ไม่สามารถติดต่อ Server ได้" });
+        Toast.show({
+          type: "error",
+          text1: "เกิดข้อผิดพลาด ไม่สามารถติดต่อ Server ได้",
+        });
+        //console.log("เกิดข้อผิดพลาด ไม่สามารถติดต่อ Server ได้");
       }
     }
   };
-  
   return (
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <Text h2>Thai-Nichi</Text>
+      <Text h2> Thai-Nichi</Text>
       <Card containerStyle={{ padding: 10, width: "90%" }}>
         <Controller
           name="email"
@@ -67,7 +75,6 @@ const LoginScreen = (): React.JSX.Element => {
             />
           )}
         />
-
         <Controller
           name="password"
           control={control}
@@ -75,8 +82,16 @@ const LoginScreen = (): React.JSX.Element => {
             <Input
               placeholder="Password"
               leftIcon={{ name: "key" }}
+              rightIcon={
+                <Icon
+                //add icon for display password
+                name={showPassword?"eye":"eye-off"}
+                type="feather"
+                onPress={()=>setShowPassword(!showPassword)}
+                />
+              }
               keyboardType="number-pad"
-              secureTextEntry
+              secureTextEntry = {!showPassword}
               onBlur={onBlur}
               onChangeText={onChange}
               value={value}
@@ -84,7 +99,6 @@ const LoginScreen = (): React.JSX.Element => {
             />
           )}
         />
-
         <Button
           title="Log In"
           size="lg"
