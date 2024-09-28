@@ -12,6 +12,7 @@ import { useAppDispatch } from "../redux-toolkit/hooks";
 
 
 const LoginScreen = (): React.JSX.Element => {
+  // สร้าง state สำหรับควบคุมการแสดงผลรหัสผ่าน​
   const [showPassword,setShowPassword] = useState(false);
   const dispatch = useAppDispatch();
 
@@ -40,6 +41,7 @@ const LoginScreen = (): React.JSX.Element => {
       const response = await login(data.email, data.password);
       if (response.status === 200) {
         dispatch(setIsLogin(true));
+        //Toast.show({type:'success',text1:'Login Success'})
         // console.log("login success");
       }
     } catch (error: any) {

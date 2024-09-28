@@ -45,7 +45,7 @@ const HomeScreen = (): React.JSX.Element => {
         <HeaderButtons HeaderButtonComponent={MaterialHeaderButton}>
           <Item
             title="logout"
-            onPress={async ()=>{
+            onPress={async()=>{
               await logout();
               dispatch(setIsLogin(false));
              }}
@@ -54,23 +54,26 @@ const HomeScreen = (): React.JSX.Element => {
         ),
       });
     }, [navigation]);
+
     const gotoAbout = () => {
       navigation.navigate("About", {
         companyName: "Thai-Nichi Institute of Technology",
         companyId: 100,
       });
     };
+
     return (
       <View style={styles.container}>
         <MaterialIcon name="home" size={40} color="pink" />
         {profile?(
         <>
-        <Text h3>Welcome {profile.name}</Text>
-        <Text>
-          Email: {profile.email} ID:: {profile.ig} Role: {profile.role}
-        </Text>
+          <Text h3> Welcome {profile.name}</Text>
+          <Text>
+            Email: {profile.email} ID:{profile.ig} Role:{profile.role}
+          </Text>
         </>
       ):null}
+      {/*<Text>HomeScreen</Text>*/}
       <Button title="About us" onPress={gotoAbout} />
     </View>
   );
