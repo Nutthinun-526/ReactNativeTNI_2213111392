@@ -44,6 +44,60 @@ const Drawer = createDrawerNavigator();
 //Tab
 const Tab = createBottomTabNavigator();
 
+function TabContainer() {
+  return (
+    <Tab.Navigator
+      screenOptions={({ route }) => ({
+        tabBarIcon: ({ focused, color, size }) => {
+          let iconName="";
+          if (route.name === "HomeStack") {
+            iconName = focused
+              ? "home"
+              : "home-outline";
+          } else if (route.name === "CameraStack") {
+            iconName = focused ? "camera" : "camera-outline";
+          }
+          // You can return any component that you like here!
+          return <Ionicons name={iconName} size={size} color={color} />;
+        },
+        tabBarActiveTintColor: "tomato",
+        tabBarInactiveTintColor: "gray",
+        headerShown:false,
+        tabBarActiveBackgroundColor:'lightblue'
+      })}
+    >
+      <Tab.Screen
+        name="HomeStack"
+        component={HomeStackScreen}
+        options={{ tabBarLabel: "หน้าหลัก" }}
+      />
+      <Tab.Screen
+        name="CameraStack"
+        component={CameraStackScreen}
+        options={{ tabBarLabel: "กล้อง" }}
+      />
+    </Tab.Navigator>
+  );
+}
+
+function CameraStackScreen() {
+  return (
+    <CameraStack.Navigator
+      initialRouteName="Products"
+      screenOptions={{
+        //Global
+        headerTitleStyle: { fontWeight: "bold" },
+      }}
+    >
+      <CameraStack.Screen
+        name="Camera"
+        component={CameraScreen}
+        options={{ title: "Camera" }}
+      />
+    </CameraStack.Navigator>
+  );
+}
+
 function HomeStackScreen() {
   return (
     <HomeStack.Navigator
@@ -132,46 +186,9 @@ function MapScreenStack() {
   );
 }
 
-function TabContainer() {
-  return (
-    <Tab.Navigator
-      screenOptions={({ route }) => ({
-        tabBarIcon: ({ focused, color, size }) => {
-          let iconName = "";
-
-          if (route.name === "Home") {
-            iconName = focused
-              ? "ios-information-circle"
-              : "ios-information-circle-outline";
-          } else if (route.name === "Settings") {
-            iconName = focused ? "ios-list" : "ios-list-outline";
-          }
-
-          // You can return any component that you like here!​
-          return <Ionicons name={iconName} size={size} color={color} />;
-        },
-        tabBarActiveTintColor: "tomato",
-        tabBarInactiveTintColor: "gray",
-        headerShown: false,
-        tabBarActiveBackgroundColor: "lightblue",
-      })}
-    >
-      <Tab.Screen
-        name="HomeStack"
-        component={HomeStackScreen}
-        options={{ tabBarLabel: "หน้าหลัก" }}
-      />
-      <Tab.Screen
-        name="CameraStack"
-        component={CameraScreenStack}
-        options={{ tabBarLabel: "กล้อง" }}
-      />
-    </Tab.Navigator>
-  );
-}
-
 const App = (): React.JSX.Element => {
   //const [isLogin] = useState(false);
+  //ใช้ useAppSelector เพื่อดึง state จาก store
   const { isLogin, isLoading } = useAppSelector(selectAuthState);
   const dispatch = useAppDispatch();
 
@@ -180,6 +197,7 @@ const App = (): React.JSX.Element => {
       dispatch(setIsLoading(true));
       const response = await getProfile();
       if (response?.data.data.user) {
+        dispatch(setProfile(response.data.data.user));
         dispatch(setIsLogin(true));
       } else {
         dispatch(setIsLogin(false));
@@ -204,35 +222,26 @@ const App = (): React.JSX.Element => {
       </View>
     );
   }
+
   return (
     <>
-      <SafeAreaProvider>
-        <NavigationContainer>
-          {" "}
-          {/**manages our navigation  */}
-          <HeaderButtonsProvider stackType="native">
-            {isLogin ? (
-              <Drawer.Navigator
-                screenOptions={{ headerShown: false }}
-                drawerContent={(props) => <MenuScreen {...props} />}
-              >
-                <Drawer.Screen name="HomeStack" component={TabContainer} />
-                <Drawer.Screen
-                  name="ProductStack"
-                  component={ProductStackScreen}
-                />
-              </Drawer.Navigator>
-            ) : (
-              <LoginStackScreen />
-            )}
-          </HeaderButtonsProvider>
-        </NavigationContainer>
-      </SafeAreaProvider>
+      <HeaderButtonsProvider stackType="native">
+        {isLogin ? (
+          <Drawer.Navigator
+            screenOptions={{ headerShown: false }}
+            drawerContent={(props) => <MenuScreen {...props} />}
+          >
+            <Drawer.Screen name="Home" component={TabContainer} />
+            <Drawer.Screen name="ProductStack" component={ProductStackScreen} />
+          </Drawer.Navigator>
+        ) : (
+          <LoginStackScreen />
+        )}
+      </HeaderButtonsProvider>
       <Toast />
     </>
   );
 };
-
 const AppWrapper = () => {
   return (
     <Provider store={store}>
@@ -244,5 +253,4 @@ const AppWrapper = () => {
     </Provider>
   );
 };
-
-export default App;
+export default AppWrapper;
